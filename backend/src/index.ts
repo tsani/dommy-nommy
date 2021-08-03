@@ -14,11 +14,13 @@ import fp from 'fastify-plugin';
 const app = fastify({ logger: true });
 
 app.get('/', async (req, res) => {
-  const auth = await google.auth.getClient({
-    scopes: ['https://googleapis.com/auth/spreadsheets.readonly']
+  const auth = new google.auth.GoogleAuth({
+    keyFile: './secrets.json',
+    scopes:['https://googleapis.com/auth/spreadsheets.readonly'],
   });
   console.log(auth);
-  const sheets = google.sheets({ version: 'v4', auth });
+  google.options({ auth });
+  const sheets = google.sheets({ version: 'v4' });
   const result = await sheets.spreadsheets.values.get({
     spreadsheetId: process.env.SHEET_ID,
     range: 'meal-db!A2:A2',
