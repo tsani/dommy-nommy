@@ -1,26 +1,21 @@
-const {JWT} = require('google-auth-library');
-const google = require('googleapis').google;
-const fs = require('fs');
-const keys = JSON.parse(fs.readFileSync('./secrets.json'));
-
+import Sheets from "node-sheets";
+const fs = require("fs");
+const keys = JSON.parse(fs.readFileSync("./secrets.json"));
 async function main() {
-  const client = new JWT({
-    email: keys.client_email,
-    key: keys.private_key,
-    scopes:['https://googleapis.com/auth/spreadsheets.readonly'],
-  });
-  console.log(client);
-
-  const url = `https://dns.googleapis.com/dns/v1/projects/${keys.project_id}`;
-  const res = await client.request({url});
-
-  const sheets = google.sheets({ version: 'v4', auth: client });
-  const result = await sheets.spreadsheets.values.get({
-    spreadsheetId: process.env.SHEET_ID,
-    range: 'meal-db!A2:A2',
-  });
-
-  console.log(res.data);
+  try {
+    const gs = new Sheets(
+      "1C6q4Y5ewclcuAkEmX-Df8kpMYBEUAAGq2wSHcdaV7oQ"
+    );
+    const email = keys.client_email;
+    const key = keys.private_key;
+    await gs.authorizeJWT(keys);
+    const table = await gs.tables("meal-db!A1:E3");
+    console.log(table.headers);
+    console.log(table.formats);
+    console.log(table.rows);
+  } catch (err) {
+    console.error(err);
+  }
 }
 
-main().catch(console.error);
+main();
