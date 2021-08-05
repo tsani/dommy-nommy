@@ -9,7 +9,7 @@ interface BasicMeal {
   times: MealTime[];
 }
 
-interface NamedMeal extends BasicMeal {
+export interface NamedMeal extends BasicMeal {
   type: "named";
   name: string;
   recipe: Recipe;
@@ -27,11 +27,10 @@ interface AnonymousMeal extends BasicMeal {
 
 type Meal = NamedMeal | AnonymousMeal;
 
-
 /**
  * The array always has exactly 7 elements. The first is understood as Sunday's meals.
  */
-type WeeklyMealPlan = Array<{
+export type WeeklyMealPlan = Array<{
   breakfast: Meal;
   lunch: Meal;
   dinner: Meal;
@@ -44,35 +43,3 @@ type WeeklyMealPlan = Array<{
  * Notice that the Meal has a _list_ of potential times it could be eaten at, but that's OK in the plan,
  * since the position of the Meal in the plan tells us when we're going to be eating it this week.
  */
-
-// Example:
-const chickenDinner: AnonymousMeal = {
-  type: "anonymous",
-  ingredients: ["chicken", "rice", "broccoli"],
-  times: ["dinner"],
-};
-const flankSteakDinner: AnonymousMeal = {
-  type: "anonymous",
-  ingredients: ["flank steak", "potatoes", "asparagus"],
-  times: ["dinner"],
-};
-const pancakes: NamedMeal = {
-  type: "named",
-  name: "pancakes",
-  times: ["breakfast"],
-};
-const grilledCheeseSandwich: NamedMeal = {
-  type: "named",
-  name: "grilled cheese sandwich",
-  times: ["snack", "lunch"]
-};
-const cereal: NamedMeal = {
-  type: "named",
-  name: "cereal",
-  times: ["breakfast"],
-};
-
-const plan: WeeklyMealPlan = [
-  { breakfast: cereal, lunch: grilledCheeseSandwich, dinner: chickenDinner },
-  // ... (6 more days)
-];
