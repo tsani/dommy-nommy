@@ -63,8 +63,36 @@ function mealsByPossibleTiming(
     });
   });
 
-  console.log("=====here are dinners=====");
-  console.log(dinners);
+  return [breakfasts, lunches, dinners];
+}
+
+//given a list of all possible breafasts, lunches, dinners
+//gives back an array of daily meal plans (ex. each elem is a day's meal plan: 1 din, lunch, bfast)
+function weeklyMealPlan(
+  mealsByTiming: NamedMeal[][]
+): WeeklyMealPlan {
+  mealsByTiming.map((x) => shuffle(x));
   return [];
 }
+//from github
+function shuffle(array) {
+  var currentIndex = array.length,
+    randomIndex;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex],
+      array[currentIndex],
+    ];
+  }
+
+  return array;
+}
+
 main();
