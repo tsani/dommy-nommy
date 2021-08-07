@@ -1,38 +1,16 @@
-import { google } from 'googleapis';
 import fastify from 'fastify';
-import fetch from 'node-fetch';
-import fp from 'fastify-plugin';
-
-// // Eventually we should make a fastify plugin that shares the google
-// // auth between all the routes.
-// declare module 'fastify' {
-//   interface FastifyInstance {
-//     googleAuth: ???
-//   }
-// }
-
-const app = fastify({ logger: true });
-
-app.get('/', async (req, res) => {
-  const auth = new google.auth.GoogleAuth({
-    keyFile: './secrets.json',
-    scopes:['https://googleapis.com/auth/spreadsheets.readonly'],
-  });
-  console.log(auth);
-  google.options({ auth });
-  const sheets = google.sheets({ version: 'v4' });
-  const result = await sheets.spreadsheets.values.get({
-    spreadsheetId: process.env.SHEET_ID,
-    range: 'meal-db!A2:A2',
-  });
-
-  return JSON.stringify(result);
-});
+import api from './api';
+import fs from 'fs';
 
 async function main() {
-  await app.listen(4000);
+    const sheetId = '1C6q4Y5ewclcuAkEmX-Df8kpMYBEUAAGq2wSHcdaV7oQ';
+    const secrets = JSON.parse(fs.readFileSync('./secrets.json').toString());
+
+    const app = fastify({ logger: true });
+    app.register(api({ sheets: { sheetId, secrets } }));
+    await app.listen(4000);
 }
 
 main().catch((e) => {
-  console.error(`Fatal: ${e.stack}`);
+    console.error(`Fatal: ${e.stack}`);
 });
