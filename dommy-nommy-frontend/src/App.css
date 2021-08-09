@@ -1,38 +1,46 @@
-.App {
-  text-align: center;
+* {
+    font-family: Verdana;
+}
+.meal-card {
+    min-height: 4em;
+    height: 100%;
+    background-color: azure;
+    padding: 0.5em;
+    border: 1px solid saddlebrown;
+    border-radius-topleft: 0.4em;
+    border-radius-bottomright: 0.4em;
+
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.meal-time-header {
+    font-weight: bold;
+    font-family: Gill Sans;
+    font-size: 160%;
+    text-align: left;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.meal-grid {
+    margin: 0 !important;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.meal-grid > .row {
+    justify-content: space-between !important;
 }
 
-.App-link {
-  color: #61dafb;
+.meal-row {
+    padding: 0em !important;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.meal-column {
+    height: 100%;
+}
+
+.expand-meal {
+    float: right;
+}
+
+.meal-title {
+    font-weight: bold;
+}
+.meal-name {
 }

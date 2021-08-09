@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "watch": "ts-node-dev src/test.ts",
-    "start": "node dist/test.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "ts-node-dev src/index.ts",
+    "start": "node dist/index.js",
+    "test": "ts-node src/test.ts",
     "lint": "eslint --cache src --fix"
   },
   "repository": {

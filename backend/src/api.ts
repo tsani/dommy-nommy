@@ -5,7 +5,7 @@ import { makeWeeklyMealPlan } from './meal-planner';
 import { partitionMealsByTiming } from './meal-db';
 
 const api = (config: Configuration) =>
-    fp(async (app) => {
+    fp<Configuration>(async (app) => {
         app.register(mealDbPlugin(config.sheets));
 
         app.get('/meal-plan', async (req, res) => {
@@ -13,5 +13,7 @@ const api = (config: Configuration) =>
             const weeklyMealPlan = makeWeeklyMealPlan(partitionMealsByTiming(allMeals));
             res.send(weeklyMealPlan);
         });
+
+        console.log('did load the routes');
     });
 export default api;

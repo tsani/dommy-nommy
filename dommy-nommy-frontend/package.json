@@ -10,9 +10,13 @@
     "@types/node": "^12.20.17",
     "@types/react": "^17.0.15",
     "@types/react-dom": "^17.0.9",
+    "fomantic-ui": "^2.8.8",
+    "fomantic-ui-css": "^2.8.8",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^2.0.3",
     "typescript": "^4.3.5",
     "web-vitals": "^1.1.2"
   },
@@ -39,5 +43,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "proxy": "http://localhost:4000"
 }

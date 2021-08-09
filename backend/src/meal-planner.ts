@@ -75,7 +75,7 @@ export function makeWeeklyMealPlan({
             LOQ.push(dinner);
         }
         if (dinner === undefined) {
-            dinner = { type: 'anonymous', ingredients: [] };
+            dinner = { type: 'anonymous', ingredients: '' };
         }
 
         thisWeeksMeals.push({
