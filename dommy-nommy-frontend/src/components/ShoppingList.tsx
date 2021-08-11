@@ -1,6 +1,6 @@
-import { WeeklyMealPlan } from "./types";
-import { MEAL_ORDER } from "./constants";
-import { mealIngredients } from "./meal-util";
+import { WeeklyMealPlan } from "../types";
+import { MEAL_ORDER } from "../constants";
+import { mealIngredients } from "../meal-util";
 import { List, Table } from "semantic-ui-react";
 
 interface ShoppingListItem {
@@ -34,7 +34,8 @@ export const weeklyPlanToShoppingList = (
     (acc, day): ShoppingList =>
       MEAL_ORDER.reduce((acc, time): ShoppingList => {
         let ingredients: ShoppingList;
-        const meal = day[time];
+        console.log(day[time]);
+        const meal = day[time].meal;
         switch (meal.type) {
           case "anonymous":
             ingredients = new Map();

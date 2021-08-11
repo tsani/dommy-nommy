@@ -1,8 +1,9 @@
 //Sunday: NO new meals that create leftovers
 //Saturday: NO meals that creates 2 leftovers
-import { WeeklyMealPlan } from './types';
+import { ChosenMeal, WeeklyMealPlan } from './types';
 import { randomRange, shuffle } from './util';
 import { PartitionedMeals } from './meal-db';
+import { Meal } from './types';
 
 /**
  * Constructs a weekly meal plan from a database of potential meals partitioned by what times the meals can be eaten at.
@@ -48,18 +49,24 @@ export function makeWeeklyMealPlan({
 
     const weeksBreakfasts = breakfasts.slice(0, 2);
 
+    function chooseMeal(m: Meal, isLeftover = false): ChosenMeal {
+        return {
+            meal: m,
+            leftover: isLeftover,
+        };
+    }
     const LOQ = [];
     for (let i = 0; i < 7; i++) {
-        const breakfast = i > 3 ? weeksBreakfasts[0] : weeksBreakfasts[1];
+        const breakfast = i > 3 ? chooseMeal(weeksBreakfasts[0]) : chooseMeal(weeksBreakfasts[1]);
         let lunch;
         if (LOQ.length === 0) {
-            lunch = lunches.pop();
+            lunch = chooseMeal(lunches.pop());
         } else {
             const remove = LOQ.findIndex((x) => x !== thisWeeksMeals[i - 1].lunch);
             if (remove === -1) {
-                lunch = lunches.pop();
+                lunch = chooseMeal(lunches.pop());
             } else {
-                [lunch] = LOQ.splice(remove, 1);
+                [lunch] = LOQ.splice(remove, 1).map((x) => chooseMeal(x, true));
             }
         }
         let dinner;
@@ -72,10 +79,10 @@ export function makeWeeklyMealPlan({
         }
         if (singleLODins.length > 0 && dinner === undefined) {
             dinner = singleLODins.pop();
-            LOQ.push(dinner);
+            LOQ.push(dinner, true);
         }
         if (dinner === undefined) {
-            dinner = { type: 'anonymous', ingredients: '' };
+            dinner = { type: 'anonymous', ingredients: '', isLeftover: false };
         }
 
         thisWeeksMeals.push({

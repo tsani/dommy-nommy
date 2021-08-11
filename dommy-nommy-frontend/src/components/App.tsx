@@ -3,7 +3,7 @@ import WeekMealView from "./WeekMealView";
 import logo from "../logo.svg";
 import "../App.css";
 import { WeeklyMealPlan } from "../types";
-import ShoppingList, { weeklyPlanToShoppingList } from "../ShoppingList";
+import ShoppingList, { weeklyPlanToShoppingList } from "./ShoppingList";
 
 function App() {
   const [meals, setMeals] = useState<null | WeeklyMealPlan>(null);

@@ -33,7 +33,7 @@ export default function WeekMealView({
           <Grid.Row className={"meal-row"}>
             {new Array(7).fill(0).map((_, i) => (
               <Grid.Column className={"meal-column"}>
-                <MealCard meal={weeksMeals[i][time]} />
+                <MealCard meal={weeksMeals[i][time].meal} />
               </Grid.Column>
             ))}
           </Grid.Row>

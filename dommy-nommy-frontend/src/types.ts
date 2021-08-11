@@ -16,15 +16,20 @@ export interface NamedMeal extends BasicMeal {
   tags: string[];
 }
 
+export interface ChosenMeal {
+  meal: Meal;
+  leftover: boolean;
+}
+
 interface Recipe {
-  ingredients?: string;
+  ingredients: string;
   instructions: string[];
   serves: number;
 }
 
 interface AnonymousMeal extends BasicMeal {
   type: "anonymous";
-  ingredients: string;
+  ingredients: string[];
 }
 
 export type Meal = NamedMeal | AnonymousMeal;
@@ -33,9 +38,9 @@ export type Meal = NamedMeal | AnonymousMeal;
  * The array always has exactly 7 elements. The first is understood as Sunday's meals.
  */
 export type DailyMealPlan = {
-  breakfast: Meal;
-  lunch: Meal;
-  dinner: Meal;
+  breakfast: ChosenMeal;
+  lunch: ChosenMeal;
+  dinner: ChosenMeal;
 };
 
 /**
