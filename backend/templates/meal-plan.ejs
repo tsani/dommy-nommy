@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+<title>Meal plan</title>
+</head>
+<body>
+
+<table>
+
+<tr>
+<th> Monday </th>
+<th> Tuesday </th>
+<th> Wednesday </th>
+<th> Thurday </th>
+<th> Friday </th>
+<th> Saturday </th>
+<th> Sunday </th>
+</tr>
+
+<% for (const mealTimeName of MEAL_ORDER) { %>
+<tr>
+    <% for (let i = 0; i < 7; i++) { %>
+    <td> <%= mealPlan[i][mealTimeName].name %> </td>
+    <% } %>
+</tr>
+<% } %>
+
+
+</table>
+
+<table>
+    <tr>
+        <th> Ingredient name </th>
+        <th> Required quantities </th>
+    </tr>
+
+    <% for (const [ingredientName, shoppingListItems] of shoppingList) { %>
+    <tr>
+        <td> <%= ingredientName %> </td>
+        <td> <%= shoppingListItems.map(({ quantity }) => quantity).join(', ') %> </td>
+    </tr>
+    <% } %>
+</table>
+
+</body>
+</html>

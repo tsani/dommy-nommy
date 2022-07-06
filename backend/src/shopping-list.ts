@@ -1,23 +1,16 @@
-import { WeeklyMealPlan } from "./types";
+import { WeeklyMealPlan, ShoppingList, ShoppingListItem } from "./types";
 import { MEAL_ORDER } from "./constants";
 import { mealIngredients } from "./meal-util";
-import { List, Table } from "semantic-ui-react";
-
-interface ShoppingListItem {
-  name: string;
-  quantity?: string;
-  targetRecipe: string;
-}
 
 const key = ({ name }: ShoppingListItem): string => name;
-
-type ShoppingList = Map<string, ShoppingListItem[]>;
 
 // chicken: [4 breasts], vinegar: [1 tbsp]
 // chicken: [3 breasts]
 // UNION of these two lists gives
 // chicken: [4 breasts, 3 breasts], vinegar: [1 tbsp]
 
+// Joins two shopping lists by concatenating the lists associated to common
+// keys.
 const unionShoppingList = (
   s1: ShoppingList,
   s2: ShoppingList
@@ -47,36 +40,14 @@ export const weeklyPlanToShoppingList = (
 
           case "named":
             const mealIngredients = meal.recipe.ingredients;
-            ingredients = new Map(
-              mealIngredients
-                ? parseIngredients(mealIngredients, meal.name)
-                : []
-            );
+            ingredients = new Map(mealIngredients);
         }
         return unionShoppingList(acc, ingredients);
       }, acc),
     new Map<string, ShoppingListItem[]>()
   );
 
-// ingredients string looks like
-// meat: 1lbs, potato: 2, milk: 4tbsp 
-const parseIngredients = (s: string, targetRecipe: string): ShoppingList =>
-  new Map(
-    s.split(",").map((x) => {
-      const [name, quantity] = x
-        .trim()
-        .split(":")
-        .map((x) => x.trim());
-      const item = { name, quantity, targetRecipe };
-      const items: ShoppingListItem[] = [item];
-      return [key(item), items] as const;
-    })
-  );
-
-interface ShoppingListProps {
-  shoppingList: ShoppingList;
-}
-
+/*
 export default function ShoppingList({ shoppingList }: ShoppingListProps) {
   return (
     <Table basic={"very"} celled collapsing>
@@ -103,3 +74,4 @@ export default function ShoppingList({ shoppingList }: ShoppingListProps) {
     </Table>
   );
 }
+*/

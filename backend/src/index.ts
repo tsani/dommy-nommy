@@ -1,6 +1,10 @@
-import fastify from 'fastify';
-import api from './api';
 import fs from 'fs';
+
+import fastify from 'fastify';
+import fastifyView from '@fastify/view';
+import ejs from 'ejs';
+
+import api from './api';
 
 async function main() {
     const sheetId = '1C6q4Y5ewclcuAkEmX-Df8kpMYBEUAAGq2wSHcdaV7oQ';
@@ -8,6 +12,12 @@ async function main() {
 
     const app = fastify({ logger: true });
     app.register(api({ sheets: { sheetId, secrets } }));
+    app.register(fastifyView, {
+        engine: {
+            ejs
+        },
+    });
+
     await app.listen(4000);
 }
 

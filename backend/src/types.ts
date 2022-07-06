@@ -17,7 +17,7 @@ export interface NamedMeal extends BasicMeal {
 }
 
 interface Recipe {
-    ingredients: string[];
+    ingredients: ShoppingList;
     instructions: string[];
     serves: number;
 }
@@ -60,3 +60,20 @@ export const SUNDAY = 6;
  * Notice that the Meal has a _list_ of potential times it could be eaten at, but that's OK in the plan,
  * since the position of the Meal in the plan tells us when we're going to be eating it this week.
  */
+
+export interface ShoppingListItem {
+  name: string;
+  quantity?: string;
+  targetRecipe: string;
+}
+
+export type IngredientName = string;
+
+// e.g.
+// - chicken: [4 breasts, 3 thighs]
+// - broccoli: [1 head, 2 heads]
+// - vinegar: []        (indeterminate quantity)
+// INVARIANT:
+//   the 'name' field of each ShoppingListItem equals the key in the map
+export type ShoppingList = Map<IngredientName, ShoppingListItem[]>;
+
