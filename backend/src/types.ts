@@ -27,7 +27,7 @@ interface AnonymousMeal extends BasicMeal {
     ingredients: string[];
 }
 
-type Meal = NamedMeal | AnonymousMeal;
+export type Meal = NamedMeal | AnonymousMeal;
 
 /**
  * The array always has exactly 7 elements. The first is understood as Sunday's meals.
@@ -62,9 +62,9 @@ export const SUNDAY = 6;
  */
 
 export interface ShoppingListItem {
-  name: string;
-  quantity?: string;
-  targetRecipe: string;
+    name: string;
+    quantity?: string;
+    targetRecipe: string;
 }
 
 export type IngredientName = string;
@@ -76,4 +76,3 @@ export type IngredientName = string;
 // INVARIANT:
 //   the 'name' field of each ShoppingListItem equals the key in the map
 export type ShoppingList = Map<IngredientName, ShoppingListItem[]>;
-

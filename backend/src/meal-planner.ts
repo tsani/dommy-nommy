@@ -1,8 +1,8 @@
 //Sunday: NO new meals that create leftovers
 //Saturday: NO meals that creates 2 leftovers
+import { PartitionedMeals } from './meal-db';
 import { WeeklyMealPlan } from './types';
 import { randomRange, shuffle } from './util';
-import { PartitionedMeals } from './meal-db';
 
 /**
  * Constructs a weekly meal plan from a database of potential meals partitioned by what times the meals can be eaten at.
@@ -36,7 +36,11 @@ export function makeWeeklyMealPlan({
                 doubleLODins.push(d);
                 break;
             default:
-                throw new Error(`unhandled number of servings: ${d.recipe.serves}`);
+                console.log(
+                    `skipping recipe ${d.name} with unhandled number of servings ${d.recipe.serves}`,
+                );
+                break;
+            // throw new Error(`unhandled number of servings: ${d.recipe.serves}`);
         }
     }
 

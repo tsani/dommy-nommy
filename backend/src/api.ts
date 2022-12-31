@@ -1,12 +1,14 @@
 import fp from 'fastify-plugin';
-import mealDbPlugin from './meal-db-plugin';
-import { Configuration } from './config';
-import { makeWeeklyMealPlan } from './meal-planner';
-import { partitionMealsByTiming } from './meal-db';
-import { weeklyPlanToShoppingList } from './shopping-list';
-import { MEAL_ORDER } from './constants';
+import '@fastify/view';
 
-const api = (config: Configuration) =>
+import { Configuration } from './config';
+import { MEAL_ORDER } from './constants';
+import { partitionMealsByTiming } from './meal-db';
+import mealDbPlugin from './meal-db-plugin';
+import { makeWeeklyMealPlan } from './meal-planner';
+import { weeklyPlanToShoppingList } from './shopping-list';
+
+const api = (config: Configuration): ReturnType<typeof fp> =>
     fp<Configuration>(async (app) => {
         app.register(mealDbPlugin(config.sheets));
 
@@ -28,4 +30,5 @@ const api = (config: Configuration) =>
 
         console.log('did load the routes');
     });
+
 export default api;
